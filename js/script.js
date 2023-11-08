@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const videoPlayerContainer = document.getElementById('videoPlayerContainer');
     let currentVideo; // Declare currentVideo variable
     let currentVideoIndex = 0; // Keep track of the current video index
-    let backgroundAudio; // Declare backgroundAudio variable for Howler.js
     let audioPlaying = false; // Flag to track audio playback
 
     // Create an array to store preloaded video elements
@@ -19,14 +18,9 @@ document.addEventListener('DOMContentLoaded', function () {
         // Add more video filenames as needed
     ];
 
-    // Preload all videos in advance
-    videoArray.forEach(videoPath => {
-        const video = document.createElement('video');
-        video.src = videoPath;
-        video.preload = 'auto';
-        video.setAttribute('playsinline', ''); // Add playsinline attribute for mobile devices
-        preloadedVideos.push(video);
-    });
+    // Initialize CreateJS PreloadJS
+    const preload = new createjs.LoadQueue();
+    preload.setMaxConnections(5); // Adjust the number of concurrent downloads
 
     // Function to play video by index
     function playVideoByIndex(index) {
@@ -48,26 +42,37 @@ document.addEventListener('DOMContentLoaded', function () {
         currentVideoIndex = index;
     }
 
-    // Add a click event listener to switch to the next video on user interaction
-    document.addEventListener('click', () => {
-        // Calculate the next index, wrapping around to the beginning if needed
-        currentVideoIndex = (currentVideoIndex + 1) % videoArray.length;
+    // Preload all videos
+    preload.loadManifest(videoArray.map(videoPath => ({ src: videoPath })));
 
-        // Play the next video
-        playVideoByIndex(currentVideoIndex);
+    // Add an event listener for when all assets are loaded
+    preload.on('complete', function () {
+        // Create preloaded video elements
+        videoArray.forEach(videoPath => {
+            const video = document.createElement('video');
+            video.src = videoPath;
+            video.preload = 'auto';
+            video.setAttribute('playsinline', ''); // Add playsinline attribute for mobile devices
+            preloadedVideos.push(video);
+        });
 
-        // Play the background audio using Howler.js only once
-        if (!audioPlaying) {
-            backgroundAudio = new Howl({
-                src: ['wwwroot/assets/Song.m4a'], // Update this to the relative path of your audio file
-                loop: true, // Set the loop attribute to true for continuous playback
-                html5: true, // Use HTML5 audio
-            });
-            backgroundAudio.play();
-            audioPlaying = true;
-        }
+        // Add a click event listener to switch to the next video on user interaction
+        document.addEventListener('click', () => {
+            // Calculate the next index, wrapping around to the beginning if needed
+            currentVideoIndex = (currentVideoIndex + 1) % videoArray.length;
+
+            // Play the next video
+            playVideoByIndex(currentVideoIndex);
+
+            // Play the background audio using SoundJS only once
+            if (!audioPlaying) {
+                createjs.Sound.registerSound({ src: 'wwwroot/assets/Song.m4a', id: 'backgroundAudio' });
+                const backgroundAudio = createjs.Sound.play('backgroundAudio', { loop: -1 });
+                audioPlaying = true;
+            }
+        });
+
+        // Start with the first video in the array
+        playVideoByIndex(0);
     });
-
-    // Start with the first video in the array
-    playVideoByIndex(0);
 });

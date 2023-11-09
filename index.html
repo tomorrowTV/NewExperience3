@@ -10,6 +10,8 @@
 <body>
     <canvas id="gameCanvas"></canvas>
 
+    <div id="loadingBarContainer"><img id="loadingBar" src="wwwroot/assets/Tomorrow.gif" alt="Loading Bar"></div>
+
     <div id="videoPlayerContainer"></div>
 
     <!-- Include CreateJS and PreloadJS library scripts -->
@@ -28,6 +30,7 @@
 
         // Define assets to preload
         const assetsToLoad = [
+            { id: "loadingBar", src: "wwwroot/assets/Tomorrow.gif" },
             { id: "audio1", src: "wwwroot/assets/Song.m4a" },
             { id: "video1", src: "wwwroot/videos/SW1.mp4" },
             { id: "video2", src: "wwwroot/videos/SW2.mp4" },

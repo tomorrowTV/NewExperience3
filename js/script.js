@@ -22,6 +22,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const preload = new createjs.LoadQueue();
     preload.setMaxConnections(5); // Adjust the number of concurrent downloads
 
+    // Reference to the loading bar element
+    const loadingBar = document.getElementById('loadingBar');
+
     // Function to play video by index
     function playVideoByIndex(index) {
         if (currentVideo) {
@@ -42,11 +45,20 @@ document.addEventListener('DOMContentLoaded', function () {
         currentVideoIndex = index;
     }
 
-    // Preload all videos
+    // Preload all videos with progress tracking
     preload.loadManifest(videoArray.map(videoPath => ({ src: videoPath })));
+
+    // Add an event listener for progress updates during loading
+    preload.on('progress', function (event) {
+        // Update the width of the loading bar based on progress
+        loadingBar.style.width = (event.progress * 100) + '%';
+    });
 
     // Add an event listener for when all assets are loaded
     preload.on('complete', function () {
+        // Hide or remove the loading bar element
+        loadingBar.style.display = 'none';
+
         // Create preloaded video elements
         videoArray.forEach(videoPath => {
             const video = document.createElement('video');

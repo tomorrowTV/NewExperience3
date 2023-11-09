@@ -1,10 +1,11 @@
-/* CSS for gameCanvas and videoPlayer */
+/* CSS for gameCanvas */
 #gameCanvas {
     width: 100%;
     height: 540px; /* Adjust the height as needed */
     background-color: transparent; /* Set the canvas background color */
 }
 
+/* CSS for videoPlayerContainer and videoPlayer */
 #videoPlayerContainer {
     display: flex;
     align-items: center;
@@ -22,11 +23,13 @@
     object-fit: contain; /* Adjust the object-fit property based on your preferences */
 }
 
-/* You can keep your existing styles for other elements */
+/* General Styles */
 html {
     font-size: 14px;
     background-color: black; /* Set the background color to black */
     margin-bottom: 60px;
+    position: relative;
+    min-height: 100%;
 }
 
 @media (min-width: 768px) {
@@ -35,11 +38,7 @@ html {
     }
 }
 
+/* Focus Styles */
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
     box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-    position: relative;
-    min-height: 100%;
 }

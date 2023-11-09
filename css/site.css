@@ -10,8 +10,9 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 50px;
-    /*overflow: hidden; /* Ensure video content does not overflow the container */
+    height: 100vh;
+    overflow: hidden; /* Ensure video content does not overflow the container */
+    margin: 10px; /* Adjust the margin as needed */
 }
 
 #videoPlayer {

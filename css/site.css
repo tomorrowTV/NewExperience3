@@ -1,6 +1,9 @@
-#videoPlayer {
+#videoPlayerContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 25%;
     height: 25%;
-    object-fit: cover;
+    overflow: hidden;
 }
-

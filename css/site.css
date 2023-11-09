@@ -1,25 +1,24 @@
 /* CSS for gameCanvas and videoPlayer */
 #gameCanvas {
     width: 100%;
-    height: auto; /* Adjust the height as needed */
+    height: 540px; /* Adjust the height as needed */
     background-color: transparent; /* Set the canvas background color */
 }
 
 #videoPlayerContainer {
     position: relative;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
     display: flex;
-    justify-content: center; /* Center the video horizontally */
-    align-items: center; /* Center the video vertically */
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
 }
 
 #videoPlayer {
-    width: auto;
-    height: 100%;
+    width: 100%;
+    height: auto;
     object-fit: contain;
-    max-width: 100%; /* Ensure the video doesn't exceed its natural size */
 }
 
 /* You can keep your existing styles for other elements */

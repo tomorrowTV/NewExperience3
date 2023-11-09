@@ -9,7 +9,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
+    width: 25%;
     height: 100vh;
     overflow: hidden; /* Ensure video content does not overflow the container */
     margin: 10px; /* Adjust the margin as needed */

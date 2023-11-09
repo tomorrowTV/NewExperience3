@@ -17,8 +17,8 @@
 
 #videoPlayer {
     width: 100%;
-    height: auto;
-    object-fit: contain;
+    height: 100%;
+    object-fit: cover;
 }
 
 /* You can keep your existing styles for other elements */

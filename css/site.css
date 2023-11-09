@@ -6,20 +6,16 @@
 }
 
 #videoPlayerContainer {
-    display: inline-block;
-    align-items: center;
-    justify-content: center;
+    position: relative;
     width: 100%;
-    height: 100vh;
-    overflow: hidden; /* Ensure video content does not overflow the container */
+    height: 100%;
+    overflow: hidden;
 }
 
 #videoPlayer {
-    max-width: 100%;
-    max-height: 100%;
-    width: auto;
+    width: 100%;
     height: auto;
-    object-fit: contain; /* Adjust the object-fit property based on your preferences */
+    object-fit: contain;
 }
 
 /* You can keep your existing styles for other elements */

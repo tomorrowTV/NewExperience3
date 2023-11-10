@@ -52,6 +52,16 @@ document.addEventListener('DOMContentLoaded', function () {
     preload.on('fileload', function (event) {
         assetsLoaded++;
         console.log('Assets loaded:', assetsLoaded);
+
+        // Check if the loaded asset is a video and it's not yet in the preloadedVideos array
+        if (event.item.src.endsWith('.mp4') && !preloadedVideos.includes(event.result)) {
+            preloadedVideos.push(event.result);
+
+            // Trigger the start of the game when the first video is preloaded
+            if (preloadedVideos.length === 1 && assetsLoaded === assetsToLoad.length) {
+                startGame();
+            }
+        }
     });
 
     // Add an event listener for when all assets are loaded

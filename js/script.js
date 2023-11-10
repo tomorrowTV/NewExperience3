@@ -67,6 +67,8 @@ document.addEventListener('DOMContentLoaded', function () {
         // Hide or remove the loading bar element
         loadingBar.style.display = 'none';
 
+        console.log("Creating preloaded video elements...");
+
         // Create preloaded video elements
         videoArray.forEach(videoPath => {
             const video = document.createElement('video');
@@ -76,8 +78,12 @@ document.addEventListener('DOMContentLoaded', function () {
             preloadedVideos.push(video);
         });
 
+        console.log("Setting up click event listener...");
+
         // Add a click event listener to switch to the next video on user interaction
         document.addEventListener('click', () => {
+            console.log("Click event triggered...");
+
             currentVideoIndex = (currentVideoIndex + 1) % videoArray.length;
             playVideoByIndex(currentVideoIndex);
 
@@ -87,6 +93,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 audioPlaying = true;
             }
         });
+
+        console.log("Starting with the first video in the array...");
 
         // Start with the first video in the array
         playVideoByIndex(0);

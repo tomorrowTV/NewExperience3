@@ -43,6 +43,12 @@ document.addEventListener('DOMContentLoaded', function () {
     preload.on('progress', function (event) {
         loadingBar.style.width = (event.progress * 100) + '%';
 
+        // Check if at least three assets are preloaded
+        if (assetsLoaded >= 3) {
+            // Hide loading bar when the video player is about to be displayed
+            loadingBar.style.display = 'none';
+        }
+
         // Check if at least one video is preloaded or if all assets are loaded
         if ((preloadedVideos.length > 0 || assetsLoaded === assetsToLoad.length) && !audioPlaying) {
             startGame();
@@ -67,7 +73,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Add an event listener for when all assets are loaded
     preload.on('complete', function () {
-        loadingScreen.style.display = 'none'; // Hide loading screen
         console.log('All assets loaded');
         if (preloadedVideos.length === 0) {
             console.warn('No videos preloaded');

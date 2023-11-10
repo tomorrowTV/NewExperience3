@@ -7,14 +7,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Define assets to preload
     const assetsToLoad = [
-        { id: "loadingBar", src: "wwwroot/assets/CowboyHead.gif" },
-        { id: "audio1", src: "wwwroot/assets/Song.m4a" },
-        { id: "video1", src: "wwwroot/videos/SW1.mp4" },
-        { id: "video2", src: "wwwroot/videos/SW2.mp4" },
-        { id: "video3", src: "wwwroot/videos/SW3.mp4" },
-        { id: "video4", src: "wwwroot/videos/SW4.mp4" },
-        { id: "video5", src: "wwwroot/videos/SW5.mp4" },
-        { id: "video6", src: "wwwroot/videos/SW6.mp4" },
+        'wwwroot/assets/CowboyHead.gif',
+        'wwwroot/assets/Song.m4a',
+        'wwwroot/videos/SW1.mp4',
+        'wwwroot/videos/SW2.mp4',
+        'wwwroot/videos/SW3.mp4',
+        'wwwroot/videos/SW4.mp4',
+        'wwwroot/videos/SW5.mp4',
+        'wwwroot/videos/SW6.mp4',
         // Add more assets as needed
     ];
 
@@ -66,11 +66,11 @@ document.addEventListener('DOMContentLoaded', function () {
         // Hide or remove the loading bar element
         loadingBar.style.display = 'none';
 
-        // Create preloaded video elements from all assets
+        // Create preloaded video elements
         assetsToLoad.forEach(asset => {
-            if (asset.src.endsWith('.mp4')) {
+            if (asset.endsWith('.mp4')) {
                 const video = document.createElement('video');
-                video.src = asset.src;
+                video.src = asset;
                 video.preload = 'auto';
                 video.setAttribute('playsinline', '');
                 preloadedVideos.push(video);

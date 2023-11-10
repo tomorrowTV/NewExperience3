@@ -47,14 +47,14 @@ document.addEventListener('DOMContentLoaded', function () {
     preload.on('progress', function (event) {
         loadingBar.style.width = (event.progress * 100) + '%';
 
-        // Check if at least three assets are preloaded
-        if (assetsLoaded >= 3) {
+        // Check if at least one video is preloaded or if all assets are loaded
+        if ((preloadedVideos.length > 0 || assetsLoaded === assetsToLoad.length) && !audioPlaying) {
             // Hide loading bar when the video player is about to be displayed
             loadingBar.style.display = 'none';
         }
 
-        // Check if at least one video is preloaded or if all assets are loaded
-        if ((preloadedVideos.length > 0 || assetsLoaded === assetsToLoad.length) && !audioPlaying) {
+        // Check if at least one video is preloaded
+        if (preloadedVideos.length > 0 && !audioPlaying) {
             startGame();
         }
     });

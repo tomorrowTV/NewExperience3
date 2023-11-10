@@ -48,12 +48,14 @@ document.addEventListener('DOMContentLoaded', function () {
     // Add an event listener for progress updates during loading
     preload.on('progress', function (event) {
         loadingBar.style.width = (event.progress * 100) + '%';
+        console.log("Progress: " + (event.progress * 100) + '%', "Loaded: " + (event.loaded * 100) + '%');
 
-        // Check if the preload threshold is reached
         if (assetsLoaded < preloadThreshold && event.loaded === 1) {
             assetsLoaded++;
+            console.log("Assets loaded: " + assetsLoaded);
+
             if (assetsLoaded === preloadThreshold) {
-                // Enable the game or initiate specific logic
+                console.log("Starting game...");
                 startGame();
             }
         }

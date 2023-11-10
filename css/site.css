@@ -1,41 +1,44 @@
-/* CSS for gameCanvas and videoPlayer */
-#gameCanvas {
+/* Bootstrap grid system and utility classes */
+
+/* Container for the entire content */
+.container {
+    padding: 0; /* Remove default Bootstrap padding */
+}
+
+/* Video container */
+.video-container {
+    position: relative;
+    padding-top: 56.25%; /* 16:9 aspect ratio (height:width) for responsive scaling */
+    overflow: hidden;
+}
+
+/* Video player */
+.video-player {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 540px; /* Adjust the height as needed */
-    background-color: transparent; /* Set the canvas background color */
+    height: 100%;
+    object-fit: cover; /* Adjust the object-fit property based on your preferences */
 }
 
-#videoPlayerContainer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden; /* Ensure video content does not overflow the container */
-}
-
-#videoPlayer {
-    max-width: 100%;
-    max-height: 100%;
-    width: auto;
-    height: auto;
-    object-fit: contain; /* Adjust the object-fit property based on your preferences */
-}
-
-/* You can keep your existing styles for other elements */
-html {
-    font-size: 14px;
-    background-color: black; /* Set the background color to black */
+/* Additional styles for other elements if needed */
+body {
+    background-color: black;
     margin-bottom: 60px;
 }
 
 @media (min-width: 768px) {
-    html {
+    body {
         font-size: 16px;
     }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
     box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 

@@ -1,9 +1,13 @@
 document.addEventListener('DOMContentLoaded', function () {
     const videoPlayerContainer = document.getElementById('videoPlayerContainer');
-    let currentVideo;
-    let currentVideoIndex = 0;
-    let audioPlaying = false;
+    let currentVideo; // Declare currentVideo variable
+    let currentVideoIndex = 0; // Keep track of the current video index
+    let audioPlaying = false; // Flag to track audio playback
+
+    // Create an array to store preloaded video elements
     const preloadedVideos = [];
+
+    // Define the videoArray with the video paths
     const videoArray = [
         'wwwroot/videos/SW1.mp4',
         'wwwroot/videos/SW2.mp4',
@@ -14,11 +18,14 @@ document.addEventListener('DOMContentLoaded', function () {
         // Add more video filenames as needed
     ];
 
+    // Initialize CreateJS PreloadJS
     const preload = new createjs.LoadQueue();
-    preload.setMaxConnections(5);
+    preload.setMaxConnections(5); // Adjust the number of concurrent downloads
 
+    // Reference to the loading bar element
     const loadingBar = document.getElementById('loadingBar');
 
+    // Function to play video by index
     function playVideoByIndex(index) {
         if (currentVideo) {
             currentVideo.pause();
@@ -28,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const newVideo = preloadedVideos[index];
         videoPlayerContainer.appendChild(newVideo);
 
-        newVideo.currentTime = currentVideo ? currentVideo.currentTime : 0;
+        newVideo.currentTime = currentVideo ? currentVideo.currentTime : 0; // Sync video time
 
         currentVideo = newVideo;
         currentVideo.play().catch(error => {
@@ -38,38 +45,46 @@ document.addEventListener('DOMContentLoaded', function () {
         currentVideoIndex = index;
     }
 
-    function preloadVideo(index) {
-        const video = document.createElement('video');
-        video.src = videoArray[index];
-        video.preload = 'auto';
-        video.setAttribute('playsinline', '');
-        preloadedVideos[index] = video;
-    }
+    // Preload all videos with progress tracking
+    preload.loadManifest(videoArray.map(videoPath => ({ src: videoPath })));
 
-    preloadVideo(0); // Only preload the first video initially
-
+    // Add an event listener for progress updates during loading
     preload.on('progress', function (event) {
+        // Update the width of the loading bar based on progress
         loadingBar.style.width = (event.progress * 100) + '%';
+    });
 
-        if (event.progress >= 0.5) {
-            loadingBar.style.display = 'none';
+    // Add an event listener for when all assets are loaded
+    preload.on('complete', function () {
+        // Hide or remove the loading bar element
+        loadingBar.style.display = 'none';
 
-            document.addEventListener('click', () => {
-                currentVideoIndex = (currentVideoIndex + 1) % videoArray.length;
+        // Create preloaded video elements
+        videoArray.forEach(videoPath => {
+            const video = document.createElement('video');
+            video.src = videoPath;
+            video.preload = 'auto';
+            video.setAttribute('playsinline', ''); // Add playsinline attribute for mobile devices
+            preloadedVideos.push(video);
+        });
 
-                // Preload the next video on-demand
-                preloadVideo(currentVideoIndex);
+        // Add a click event listener to switch to the next video on user interaction
+        document.addEventListener('click', () => {
+            // Calculate the next index, wrapping around to the beginning if needed
+            currentVideoIndex = (currentVideoIndex + 1) % videoArray.length;
 
-                playVideoByIndex(currentVideoIndex);
+            // Play the next video
+            playVideoByIndex(currentVideoIndex);
 
-                if (!audioPlaying) {
-                    createjs.Sound.registerSound({ src: 'wwwroot/assets/Song.m4a', id: 'backgroundAudio' });
-                    const backgroundAudio = createjs.Sound.play('backgroundAudio', { loop: -1 });
-                    audioPlaying = true;
-                }
-            });
+            // Play the background audio using SoundJS only once
+            if (!audioPlaying) {
+                createjs.Sound.registerSound({ src: 'wwwroot/assets/Song.m4a', id: 'backgroundAudio' });
+                const backgroundAudio = createjs.Sound.play('backgroundAudio', { loop: -1 });
+                audioPlaying = true;
+            }
+        });
 
-            playVideoByIndex(0);
-        }
+        // Start with the first video in the array
+        playVideoByIndex(0);
     });
 });

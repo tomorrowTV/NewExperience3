@@ -54,13 +54,13 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log('Assets loaded:', assetsLoaded);
 
         // Check if the loaded asset is a video and it's not yet in the preloadedVideos array
-        if (event.item.src.endsWith('.mp4') && !preloadedVideos.includes(event.result)) {
+        if (event.item.src.endsWith('.mp4') && !preloadedVideos.some(video => video.src === event.result.src)) {
             preloadedVideos.push(event.result);
+        }
 
-            // Trigger the start of the game when the first video is preloaded
-            if (preloadedVideos.length === 1 && assetsLoaded === assetsToLoad.length) {
-                startGame();
-            }
+        // Trigger the start of the game when the first video is preloaded
+        if (preloadedVideos.length === 1 && assetsLoaded === assetsToLoad.length) {
+            startGame();
         }
     });
 

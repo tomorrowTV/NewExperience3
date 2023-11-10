@@ -19,10 +19,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const loadingBar = document.getElementById('loadingBar');
 
-    // Set the number of assets to preload before enabling the game
-    const preloadThreshold = 3;
-    let assetsLoaded = 0;
-
     // Function to play video by index
     function playVideoByIndex(index) {
         if (currentVideo) {
@@ -42,19 +38,23 @@ document.addEventListener('DOMContentLoaded', function () {
         currentVideoIndex = index;
     }
 
-    // Preload videos with progress tracking
-    preload.loadManifest(videoArray.map(videoPath => ({ src: videoPath })));
+    // Preload the first three videos with progress tracking
+    preload.loadManifest(videoArray.slice(0, 3).map(videoPath => ({ src: videoPath })));
 
     // Add an event listener for progress updates during loading
     preload.on('progress', function (event) {
         loadingBar.style.width = (event.progress * 100) + '%';
-        console.log("Progress: " + (event.progress * 100) + '%', "Loaded: " + (event.loaded * 100) + '%');
 
-        if (assetsLoaded < preloadThreshold && event.loaded === 1) {
-            assetsLoaded++;
-            console.log("Assets loaded: " + assetsLoaded);
+        if (event.loaded === 1 && preloadedVideos.length < 3) {
+            // Create preloaded video elements for the first three videos
+            const video = document.createElement('video');
+            video.src = videoArray[preloadedVideos.length];
+            video.preload = 'auto';
+            video.setAttribute('playsinline', '');
+            preloadedVideos.push(video);
 
-            if (assetsLoaded === preloadThreshold) {
+            // If the first three videos are loaded, start the game
+            if (preloadedVideos.length === 3) {
                 console.log("Starting game...");
                 startGame();
             }
@@ -62,28 +62,11 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     function startGame() {
-        console.log("Starting game...");
-
         // Hide or remove the loading bar element
         loadingBar.style.display = 'none';
 
-        console.log("Creating preloaded video elements...");
-
-        // Create preloaded video elements
-        videoArray.forEach(videoPath => {
-            const video = document.createElement('video');
-            video.src = videoPath;
-            video.preload = 'auto';
-            video.setAttribute('playsinline', '');
-            preloadedVideos.push(video);
-        });
-
-        console.log("Setting up click event listener...");
-
         // Add a click event listener to switch to the next video on user interaction
         document.addEventListener('click', () => {
-            console.log("Click event triggered...");
-
             currentVideoIndex = (currentVideoIndex + 1) % videoArray.length;
             playVideoByIndex(currentVideoIndex);
 
@@ -93,8 +76,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 audioPlaying = true;
             }
         });
-
-        console.log("Starting with the first video in the array...");
 
         // Start with the first video in the array
         playVideoByIndex(0);

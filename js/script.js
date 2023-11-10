@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
     preload.on('progress', function (event) {
         loadingBar.style.width = (event.progress * 100) + '%';
 
-        if (event.loaded === 1 && assetsLoaded < preloadThreshold) {
+        if (event.loaded === .75 && assetsLoaded < preloadThreshold) {
             assetsLoaded++;
             console.log("Assets loaded: " + assetsLoaded);
 

@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let currentVideoIndex = 0;
     let audioPlaying = false;
     const preloadedVideos = [];
+    let assetsLoaded = 0;
 
     // Define assets to preload
     const assetsToLoad = [
@@ -51,14 +52,19 @@ document.addEventListener('DOMContentLoaded', function () {
                     videoElement.preload = 'auto';
                     videoElement.setAttribute('playsinline', '');
                     preloadedVideos[index] = videoElement;
+
+                    // Trigger the start of the game when the first video is preloaded
+                    if (index === 0 && assetsLoaded === 0) {
+                        startGame();
+                    }
                 }
             });
-
-            if (preloadedVideos.length > 0) {
-                // Start the game when at least one video is preloaded
-                startGame();
-            }
         }
+    });
+
+    // Add an event listener for when each asset is loaded
+    preload.on('fileload', function (event) {
+        assetsLoaded++;
     });
 
     // Add an event listener for when all assets are loaded

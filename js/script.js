@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
     preload.setMaxConnections(5);
 
     const loadingBar = document.getElementById('loadingBar');
+    const loadingScreen = document.getElementById('loadingBarContainer');
 
     // Function to play video by index
     function playVideoByIndex(index) {
@@ -66,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Add an event listener for when all assets are loaded
     preload.on('complete', function () {
-        loadingBar.style.display = 'none'; // Hide loading bar
+        loadingScreen.style.display = 'none'; // Hide loading screen
         console.log('All assets loaded');
         if (preloadedVideos.length === 0) {
             console.warn('No videos preloaded');

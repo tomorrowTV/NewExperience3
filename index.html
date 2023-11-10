@@ -8,17 +8,18 @@
 
     <!-- Include your site.css file for styling -->
     <link rel="stylesheet" type="text/css" href="css/site.css">
+</head>
+<body>
+    <canvas id="gameCanvas"></canvas>
+
+    <div id="loadingBarContainer"><img id="loadingBar" src="wwwroot/assets/CowboyHead.gif" alt="Loading Bar"></div>
+
+    <div id="videoPlayerContainer"></div>
 
     <!-- Include CreateJS and PreloadJS library scripts -->
     <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
     <script src="https://code.createjs.com/1.0.0/preloadjs.min.js"></script>
     <script src="https://code.createjs.com/1.0.0/soundjs.min.js"></script>
-
-    <!-- Include Video.js CSS -->
-    <link href="https://vjs.zencdn.net/7.15.4/video-js.css" rel="stylesheet">
-
-    <!-- Include Video.js JavaScript -->
-    <script src="https://vjs.zencdn.net/7.15.4/video.js"></script>
 
     <!-- Include your script.js file for game logic -->
     <script src="js/script.js"></script>
@@ -49,34 +50,6 @@
             // Your game code that relies on preloaded assets
             // This can be in your existing script.js file
         });
-
-        // Event listener for when the DOM is ready
-        document.addEventListener('DOMContentLoaded', function () {
-            // Initialize Video.js
-            const player = videojs('myVideo', { /* options */ });
-
-            // Handle any additional Video.js setup or events as needed
-        });
     </script>
-</head>
-<body>
-    <canvas id="gameCanvas"></canvas>
-
-    <div id="loadingBarContainer"><img id="loadingBar" src="wwwroot/assets/CowboyHead.gif" alt="Loading Bar"></div>
-
-    <!-- Video.js player container -->
-    <div id="videoPlayerContainer">
-        <video
-            id="myVideo"
-            class="video-js vjs-default-skin"
-            controls
-            preload="auto"
-            width="640"
-            height="264"
-            data-setup='{}'>
-            <source src="wwwroot/videos/SW1.mp4" type="video/mp4">
-            <!-- Add more video sources if needed -->
-        </video>
-    </div>
 </body>
 </html>

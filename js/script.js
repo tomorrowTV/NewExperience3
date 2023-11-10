@@ -52,39 +52,32 @@ document.addEventListener('DOMContentLoaded', function () {
     preload.on('progress', function (event) {
         // Update the width of the loading bar based on progress
         loadingBar.style.width = (event.progress * 100) + '%';
-    });
 
-    // Add an event listener for when all assets are loaded
-    preload.on('complete', function () {
-        // Hide or remove the loading bar element
-        loadingBar.style.display = 'none';
+        // Check if the loading progress has reached a certain threshold (e.g., 50%)
+        if (event.progress >= 0.2) {
+            // Hide or remove the loading bar element
+            loadingBar.style.display = 'none';
 
-        // Create preloaded video elements
-        videoArray.forEach(videoPath => {
-            const video = document.createElement('video');
-            video.src = videoPath;
-            video.preload = 'auto';
-            video.setAttribute('playsinline', ''); // Add playsinline attribute for mobile devices
-            preloadedVideos.push(video);
-        });
+            // Proceed with the video player logic
 
-        // Add a click event listener to switch to the next video on user interaction
-        document.addEventListener('click', () => {
-            // Calculate the next index, wrapping around to the beginning if needed
-            currentVideoIndex = (currentVideoIndex + 1) % videoArray.length;
+            // Add a click event listener to switch to the next video on user interaction
+            document.addEventListener('click', () => {
+                // Calculate the next index, wrapping around to the beginning if needed
+                currentVideoIndex = (currentVideoIndex + 1) % videoArray.length;
 
-            // Play the next video
-            playVideoByIndex(currentVideoIndex);
+                // Play the next video
+                playVideoByIndex(currentVideoIndex);
 
-            // Play the background audio using SoundJS only once
-            if (!audioPlaying) {
-                createjs.Sound.registerSound({ src: 'wwwroot/assets/Song.m4a', id: 'backgroundAudio' });
-                const backgroundAudio = createjs.Sound.play('backgroundAudio', { loop: -1 });
-                audioPlaying = true;
-            }
-        });
+                // Play the background audio using SoundJS only once
+                if (!audioPlaying) {
+                    createjs.Sound.registerSound({ src: 'wwwroot/assets/Song.m4a', id: 'backgroundAudio' });
+                    const backgroundAudio = createjs.Sound.play('backgroundAudio', { loop: -1 });
+                    audioPlaying = true;
+                }
+            });
 
-        // Start with the first video in the array
-        playVideoByIndex(0);
+            // Start with the first video in the array
+            playVideoByIndex(0);
+        }
     });
 });

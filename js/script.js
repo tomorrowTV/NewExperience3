@@ -3,11 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let currentVideo;
     let currentVideoIndex = 0;
     let audioPlaying = false;
-
-    // Create an array to store preloaded video elements
     const preloadedVideos = [];
-
-    // Define the videoArray with the video paths
     const videoArray = [
         'wwwroot/videos/SW1.mp4',
         'wwwroot/videos/SW2.mp4',
@@ -18,12 +14,27 @@ document.addEventListener('DOMContentLoaded', function () {
         // Add more video filenames as needed
     ];
 
-    // Initialize CreateJS PreloadJS
-    const preload = new createjs.LoadQueue();
-    preload.setMaxConnections(5); // Adjust the number of concurrent downloads
+    // Define assets to preload
+    const assetsToLoad = [
+        { id: "loadingBar", src: "wwwroot/assets/CowboyHead.gif" },
+        { id: "audio1", src: "wwwroot/assets/Song.m4a" },
+        { id: "video1", src: "wwwroot/videos/SW1.mp4" },
+        { id: "video2", src: "wwwroot/videos/SW2.mp4" },
+        { id: "video3", src: "wwwroot/videos/SW3.mp4" },
+        { id: "video4", src: "wwwroot/videos/SW4.mp4" },
+        { id: "video5", src: "wwwroot/videos/SW5.mp4" },
+        { id: "video6", src: "wwwroot/videos/SW6.mp4" },
+        // Add more assets as needed
+    ];
 
-    // Reference to the loading bar element
+    const preload = new createjs.LoadQueue();
+    preload.setMaxConnections(5);
+
     const loadingBar = document.getElementById('loadingBar');
+
+    // Set the number of assets to preload before enabling the game
+    const preloadThreshold = 3;
+    let assetsLoaded = 0;
 
     // Function to play video by index
     function playVideoByIndex(index) {
@@ -35,8 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const newVideo = preloadedVideos[index];
         videoPlayerContainer.appendChild(newVideo);
 
-        newVideo.currentTime = currentVideo ? currentVideo.currentTime : 0; // Sync video time
-
+        newVideo.currentTime = currentVideo ? currentVideo.currentTime : 0;
         currentVideo = newVideo;
         currentVideo.play().catch(error => {
             console.error('Video playback error:', error.message);
@@ -45,17 +55,25 @@ document.addEventListener('DOMContentLoaded', function () {
         currentVideoIndex = index;
     }
 
-    // Preload videos with progress tracking
-    preload.loadManifest(videoArray.map(videoPath => ({ src: videoPath })));
+    // Preload assets with progress tracking
+    preload.loadManifest(assetsToLoad);
 
     // Add an event listener for progress updates during loading
     preload.on('progress', function (event) {
-        // Update the width of the loading bar based on progress
         loadingBar.style.width = (event.progress * 100) + '%';
+
+        if (event.loaded === 1 && assetsLoaded < preloadThreshold) {
+            assetsLoaded++;
+            console.log("Assets loaded: " + assetsLoaded);
+
+            if (assetsLoaded === preloadThreshold) {
+                console.log("Starting game...");
+                startGame();
+            }
+        }
     });
 
-    // Add an event listener for when all assets are loaded
-    preload.on('complete', function () {
+    function startGame() {
         // Hide or remove the loading bar element
         loadingBar.style.display = 'none';
 
@@ -64,19 +82,15 @@ document.addEventListener('DOMContentLoaded', function () {
             const video = document.createElement('video');
             video.src = videoPath;
             video.preload = 'auto';
-            video.setAttribute('playsinline', ''); // Add playsinline attribute for mobile devices
+            video.setAttribute('playsinline', '');
             preloadedVideos.push(video);
         });
 
         // Add a click event listener to switch to the next video on user interaction
         document.addEventListener('click', () => {
-            // Calculate the next index, wrapping around to the beginning if needed
             currentVideoIndex = (currentVideoIndex + 1) % videoArray.length;
-
-            // Play the next video
             playVideoByIndex(currentVideoIndex);
 
-            // Play the background audio using SoundJS only once
             if (!audioPlaying) {
                 createjs.Sound.registerSound({ src: 'wwwroot/assets/Song.m4a', id: 'backgroundAudio' });
                 const backgroundAudio = createjs.Sound.play('backgroundAudio', { loop: -1 });
@@ -86,5 +100,5 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Start with the first video in the array
         playVideoByIndex(0);
-    });
+    }
 });

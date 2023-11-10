@@ -3,7 +3,11 @@ document.addEventListener('DOMContentLoaded', function () {
     let currentVideo;
     let currentVideoIndex = 0;
     let audioPlaying = false;
+
+    // Create an array to store preloaded video elements
     const preloadedVideos = [];
+
+    // Define the videoArray with the video paths
     const videoArray = [
         'wwwroot/videos/SW1.mp4',
         'wwwroot/videos/SW2.mp4',
@@ -14,9 +18,11 @@ document.addEventListener('DOMContentLoaded', function () {
         // Add more video filenames as needed
     ];
 
+    // Initialize CreateJS PreloadJS
     const preload = new createjs.LoadQueue();
-    preload.setMaxConnections(5);
+    preload.setMaxConnections(5); // Adjust the number of concurrent downloads
 
+    // Reference to the loading bar element
     const loadingBar = document.getElementById('loadingBar');
 
     // Function to play video by index
@@ -29,7 +35,8 @@ document.addEventListener('DOMContentLoaded', function () {
         const newVideo = preloadedVideos[index];
         videoPlayerContainer.appendChild(newVideo);
 
-        newVideo.currentTime = currentVideo ? currentVideo.currentTime : 0;
+        newVideo.currentTime = currentVideo ? currentVideo.currentTime : 0; // Sync video time
+
         currentVideo = newVideo;
         currentVideo.play().catch(error => {
             console.error('Video playback error:', error.message);
@@ -38,38 +45,38 @@ document.addEventListener('DOMContentLoaded', function () {
         currentVideoIndex = index;
     }
 
-    // Preload the first three videos with progress tracking
-    preload.loadManifest(videoArray.slice(0, 3).map(videoPath => ({ src: videoPath })));
+    // Preload videos with progress tracking
+    preload.loadManifest(videoArray.map(videoPath => ({ src: videoPath })));
 
     // Add an event listener for progress updates during loading
     preload.on('progress', function (event) {
+        // Update the width of the loading bar based on progress
         loadingBar.style.width = (event.progress * 100) + '%';
-
-        if (event.loaded === 1 && preloadedVideos.length < 3) {
-            // Create preloaded video elements for the first three videos
-            const video = document.createElement('video');
-            video.src = videoArray[preloadedVideos.length];
-            video.preload = 'auto';
-            video.setAttribute('playsinline', '');
-            preloadedVideos.push(video);
-
-            // If the first three videos are loaded, start the game
-            if (preloadedVideos.length === 3) {
-                console.log("Starting game...");
-                startGame();
-            }
-        }
     });
 
-    function startGame() {
+    // Add an event listener for when all assets are loaded
+    preload.on('complete', function () {
         // Hide or remove the loading bar element
         loadingBar.style.display = 'none';
 
+        // Create preloaded video elements
+        videoArray.forEach(videoPath => {
+            const video = document.createElement('video');
+            video.src = videoPath;
+            video.preload = 'auto';
+            video.setAttribute('playsinline', ''); // Add playsinline attribute for mobile devices
+            preloadedVideos.push(video);
+        });
+
         // Add a click event listener to switch to the next video on user interaction
         document.addEventListener('click', () => {
+            // Calculate the next index, wrapping around to the beginning if needed
             currentVideoIndex = (currentVideoIndex + 1) % videoArray.length;
+
+            // Play the next video
             playVideoByIndex(currentVideoIndex);
 
+            // Play the background audio using SoundJS only once
             if (!audioPlaying) {
                 createjs.Sound.registerSound({ src: 'wwwroot/assets/Song.m4a', id: 'backgroundAudio' });
                 const backgroundAudio = createjs.Sound.play('backgroundAudio', { loop: -1 });
@@ -79,5 +86,5 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Start with the first video in the array
         playVideoByIndex(0);
-    }
+    });
 });

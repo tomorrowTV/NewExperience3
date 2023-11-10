@@ -4,15 +4,6 @@ document.addEventListener('DOMContentLoaded', function () {
     let currentVideoIndex = 0;
     let audioPlaying = false;
     const preloadedVideos = [];
-    const videoArray = [
-        'wwwroot/videos/SW1.mp4',
-        'wwwroot/videos/SW2.mp4',
-        'wwwroot/videos/SW3.mp4',
-        'wwwroot/videos/SW4.mp4',
-        'wwwroot/videos/SW5.mp4',
-        'wwwroot/videos/SW6.mp4',
-        // Add more video filenames as needed
-    ];
 
     // Define assets to preload
     const assetsToLoad = [
@@ -62,12 +53,10 @@ document.addEventListener('DOMContentLoaded', function () {
     preload.on('progress', function (event) {
         loadingBar.style.width = (event.progress * 100) + '%';
 
-        if (event.loaded === .75 && assetsLoaded < preloadThreshold) {
+        if (event.loaded === 1 && assetsLoaded < preloadThreshold) {
             assetsLoaded++;
-            console.log("Assets loaded: " + assetsLoaded);
 
             if (assetsLoaded === preloadThreshold) {
-                console.log("Starting game...");
                 startGame();
             }
         }
@@ -77,18 +66,20 @@ document.addEventListener('DOMContentLoaded', function () {
         // Hide or remove the loading bar element
         loadingBar.style.display = 'none';
 
-        // Create preloaded video elements
-        videoArray.forEach(videoPath => {
-            const video = document.createElement('video');
-            video.src = videoPath;
-            video.preload = 'auto';
-            video.setAttribute('playsinline', '');
-            preloadedVideos.push(video);
+        // Create preloaded video elements from all assets
+        assetsToLoad.forEach(asset => {
+            if (asset.src.endsWith('.mp4')) {
+                const video = document.createElement('video');
+                video.src = asset.src;
+                video.preload = 'auto';
+                video.setAttribute('playsinline', '');
+                preloadedVideos.push(video);
+            }
         });
 
         // Add a click event listener to switch to the next video on user interaction
         document.addEventListener('click', () => {
-            currentVideoIndex = (currentVideoIndex + 1) % videoArray.length;
+            currentVideoIndex = (currentVideoIndex + 1) % preloadedVideos.length;
             playVideoByIndex(currentVideoIndex);
 
             if (!audioPlaying) {

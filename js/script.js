@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const videoPlayerContainer = document.getElementById('videoPlayerContainer');
     let currentVideoIndex = 0;
     let audioPlaying = false;
+    let audioStartTime = 0;
     const preloadedVideos = [];
     let assetsLoaded = 0;
 
@@ -34,7 +35,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
         videoPlayerContainer.appendChild(newVideo);
 
-        newVideo.currentTime = 0; // Reset video time
+        // Set the current time in the video to match the audio start time
+        newVideo.currentTime = audioStartTime;
+
         newVideo.play().catch(error => {
             console.error('Video playback error:', error.message);
         });
@@ -86,6 +89,9 @@ document.addEventListener('DOMContentLoaded', function () {
     function startGame() {
         // Add a click event listener to switch to the next video on user interaction
         document.addEventListener('click', function () {
+            // Set the audio start time to match the current time in the current video
+            audioStartTime = preloadedVideos[currentVideoIndex].currentTime;
+
             currentVideoIndex = (currentVideoIndex + 1) % preloadedVideos.length;
             playVideoByIndex(currentVideoIndex);
 

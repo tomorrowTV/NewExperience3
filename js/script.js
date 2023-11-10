@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         // Trigger the start of the game when the first video is preloaded
-        if (preloadedVideos.length === 1 && assetsLoaded === assetsToLoad.length) {
+        if (preloadedVideos.length === assetsToLoad.filter(asset => asset.endsWith('.mp4')).length && assetsLoaded === assetsToLoad.length) {
             startGame();
         }
     });

@@ -28,6 +28,10 @@ document.addEventListener('DOMContentLoaded', function () {
     function playVideoByIndex(index) {
         const newVideo = preloadedVideos[index];
         videoPlayerContainer.innerHTML = ''; // Clear container
+
+        // Add the 'playsinline' attribute for mobile devices
+        newVideo.setAttribute('playsinline', '');
+
         videoPlayerContainer.appendChild(newVideo);
 
         newVideo.currentTime = 0; // Reset video time
@@ -66,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         // Trigger the start of the game when the first video is preloaded
-        if (preloadedVideos.length === assetsToLoad.filter(asset => asset.endsWith('.mp4')).length && assetsLoaded === assetsToLoad.length) {
+        if (preloadedVideos.length >= 1 && assetsLoaded === assetsToLoad.length) {
             startGame();
         }
     });

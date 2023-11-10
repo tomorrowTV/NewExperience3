@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
     const videoPlayerContainer = document.getElementById('videoPlayerContainer');
-    let currentVideo;
     let currentVideoIndex = 0;
     let audioPlaying = false;
     const preloadedVideos = [];
@@ -23,27 +22,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const loadingBar = document.getElementById('loadingBar');
 
-    // Set the number of assets to preload before enabling the game
-    const preloadThreshold = 3;
-    let assetsLoaded = 0;
-
     // Function to play video by index
     function playVideoByIndex(index) {
-        if (currentVideo) {
-            currentVideo.pause();
-            videoPlayerContainer.removeChild(currentVideo);
-        }
-
         const newVideo = preloadedVideos[index];
+        videoPlayerContainer.innerHTML = ''; // Clear container
         videoPlayerContainer.appendChild(newVideo);
 
-        newVideo.currentTime = currentVideo ? currentVideo.currentTime : 0;
-        currentVideo = newVideo;
-        currentVideo.play().catch(error => {
+        newVideo.currentTime = 0; // Reset video time
+        newVideo.play().catch(error => {
             console.error('Video playback error:', error.message);
         });
-
-        currentVideoIndex = index;
     }
 
     // Preload assets with progress tracking
@@ -53,32 +41,34 @@ document.addEventListener('DOMContentLoaded', function () {
     preload.on('progress', function (event) {
         loadingBar.style.width = (event.progress * 100) + '%';
 
-        if (event.loaded === 1 && assetsLoaded < preloadThreshold) {
-            assetsLoaded++;
+        // Check if at least one video is preloaded
+        if (preloadedVideos.length === 0) {
+            const videos = assetsToLoad.filter(asset => asset.endsWith('.mp4'));
+            videos.forEach((video, index) => {
+                if (!preloadedVideos[index] && preload.getResult(video)) {
+                    const videoElement = document.createElement('video');
+                    videoElement.src = video;
+                    videoElement.preload = 'auto';
+                    videoElement.setAttribute('playsinline', '');
+                    preloadedVideos[index] = videoElement;
+                }
+            });
 
-            if (assetsLoaded === preloadThreshold) {
+            if (preloadedVideos.length > 0) {
+                // Start the game when at least one video is preloaded
                 startGame();
             }
         }
     });
 
+    // Add an event listener for when all assets are loaded
+    preload.on('complete', function () {
+        loadingBar.style.display = 'none'; // Hide loading bar
+    });
+
     function startGame() {
-        // Hide or remove the loading bar element
-        loadingBar.style.display = 'none';
-
-        // Create preloaded video elements
-        assetsToLoad.forEach(asset => {
-            if (asset.endsWith('.mp4')) {
-                const video = document.createElement('video');
-                video.src = asset;
-                video.preload = 'auto';
-                video.setAttribute('playsinline', '');
-                preloadedVideos.push(video);
-            }
-        });
-
         // Add a click event listener to switch to the next video on user interaction
-        document.addEventListener('click', () => {
+        document.addEventListener('click', function () {
             currentVideoIndex = (currentVideoIndex + 1) % preloadedVideos.length;
             playVideoByIndex(currentVideoIndex);
 

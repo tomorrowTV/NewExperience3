@@ -50,12 +50,6 @@ document.addEventListener('DOMContentLoaded', function () {
     preload.on('progress', function (event) {
         loadingBar.style.width = (event.progress * 100) + '%';
 
-        // Check if at least one video is preloaded or if all assets are loaded
-        if ((preloadedVideos.length > 0 || assetsLoaded === assetsToLoad.length) && !audioPlaying) {
-            // Hide loading bar when the video player is about to be displayed
-            loadingBar.style.display = 'none';
-        }
-
         // Check if at least one video is preloaded
         if (preloadedVideos.length > 0 && !audioPlaying) {
             startGame();
@@ -72,8 +66,8 @@ document.addEventListener('DOMContentLoaded', function () {
             preloadedVideos.push(event.result);
         }
 
-        // Trigger the start of the game when the first video is preloaded
-        if (preloadedVideos.length >= 1 && assetsLoaded === assetsToLoad.length) {
+        // Trigger the start of the game when at least one video is preloaded
+        if (preloadedVideos.length >= 1) {
             startGame();
         }
     });

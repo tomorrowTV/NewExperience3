@@ -65,11 +65,13 @@ document.addEventListener('DOMContentLoaded', function () {
     // Add an event listener for when each asset is loaded
     preload.on('fileload', function (event) {
         assetsLoaded++;
+        console.log('Assets loaded:', assetsLoaded);
     });
 
     // Add an event listener for when all assets are loaded
     preload.on('complete', function () {
         loadingBar.style.display = 'none'; // Hide loading bar
+        console.log('All assets loaded');
     });
 
     function startGame() {

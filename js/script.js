@@ -62,6 +62,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     function startGame() {
+        console.log("Starting game...");
+
         // Hide or remove the loading bar element
         loadingBar.style.display = 'none';
 

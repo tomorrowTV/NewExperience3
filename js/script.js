@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     const videoPlayerContainer = document.getElementById('videoPlayerContainer');
     const loadingBar = document.getElementById('loadingBar');
+    const loadingScreen = document.getElementById('loadingBarContainer');
 
     let currentVideoIndex = 0;
     let audioPlaying = false;
@@ -82,6 +83,9 @@ document.addEventListener('DOMContentLoaded', function () {
             createjs.Sound.registerSound({ src: 'wwwroot/assets/Song.m4a', id: 'backgroundAudio' });
             const backgroundAudio = createjs.Sound.play('backgroundAudio', { loop: -1 });
             audioPlaying = true;
+
+            // Hide the loading screen when audio starts playing
+            loadingScreen.style.display = 'none';
         }
     });
 

@@ -30,6 +30,13 @@ document.addEventListener('DOMContentLoaded', function () {
     // Add an event listener for progress updates during loading
     preload.on('progress', function (event) {
         loadingBar.style.width = (event.progress * 100) + '%';
+
+        // Check if at least 50% of videos are preloaded
+        if (event.progress >= 0.5 && preloadedVideos.length >= assetsToLoad.length / 2) {
+            // Hide loading bar and start the game
+            loadingBar.style.display = 'none';
+            startGame();
+        }
     });
 
     // Add an event listener for when each asset is loaded
@@ -48,12 +55,6 @@ document.addEventListener('DOMContentLoaded', function () {
             });
 
             preloadedVideos.push(videoElement);
-        }
-
-        if (preloadedVideos.length >= 1) {
-            // Hide loading bar and start the game when at least one video is preloaded
-            loadingBar.style.display = 'none';
-            startGame();
         }
     });
 

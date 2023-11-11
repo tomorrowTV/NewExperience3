@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
         videoPlayerContainer.appendChild(newVideo);
 
         // Check if the video is fully loaded before attempting to play
-        if (newVideo.readyState >= 3) {
+        if (newVideo.readyState >= 4) {
             newVideo.currentTime = audioStartTime; // Set the current time in the video to match the audio start time
             newVideo.play().catch(error => {
                 console.error('Video playback error:', error.message);

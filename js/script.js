@@ -27,21 +27,31 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Function to play video by index
     function playVideoByIndex(index) {
-        const newVideo = preloadedVideos[index];
-        videoPlayerContainer.innerHTML = ''; // Clear container
+    const newVideo = preloadedVideos[index];
+    videoPlayerContainer.innerHTML = ''; // Clear container
 
-        // Add the 'playsinline' attribute for mobile devices
-        newVideo.setAttribute('playsinline', '');
+    // Add the 'playsinline' attribute for mobile devices
+    newVideo.setAttribute('playsinline', '');
 
-        videoPlayerContainer.appendChild(newVideo);
+    videoPlayerContainer.appendChild(newVideo);
 
-        // Set the current time in the video to match the audio start time
-        newVideo.currentTime = audioStartTime;
-
+    // Check if the video is fully loaded before attempting to play
+    if (newVideo.readyState >= 3) { // Check if the video metadata is loaded (readyState 1), enough data is loaded for playback to start (readyState 2), or the entire video is loaded (readyState 3)
+        newVideo.currentTime = audioStartTime; // Set the current time in the video to match the audio start time
         newVideo.play().catch(error => {
             console.error('Video playback error:', error.message);
         });
+    } else {
+        // If not fully loaded, wait for the 'canplay' event to play the video
+        newVideo.addEventListener('canplay', function onCanPlay() {
+            newVideo.removeEventListener('canplay', onCanPlay);
+            newVideo.currentTime = audioStartTime; // Set the current time in the video to match the audio start time
+            newVideo.play().catch(error => {
+                console.error('Video playback error:', error.message);
+            });
+        });
     }
+}
 
     // Preload assets with progress tracking
     preload.loadManifest(assetsToLoad);

@@ -59,23 +59,10 @@ document.addEventListener('DOMContentLoaded', function () {
     preload.on('progress', function (event) {
         loadingBar.style.width = (event.progress * 100) + '%';
 
-        // Check if at least one video is preloaded
-        if (preloadedVideos.length === 0) {
-            const videos = assetsToLoad.filter(asset => asset.endsWith('.mp4'));
-            videos.forEach((video, index) => {
-                if (!preloadedVideos[index] && preload.getResult(video)) {
-                    const videoElement = document.createElement('video');
-                    videoElement.src = video;
-                    videoElement.preload = 'auto';
-                    videoElement.setAttribute('playsinline', '');
-                    preloadedVideos[index] = videoElement;
-                }
-            });
-
-            if (preloadedVideos.some(video => !!video)) { // Check if at least one video is preloaded
-                // Start the game when at least one video is preloaded
-                startGame();
-            }
+        // Check if all videos are preloaded
+        if (assetsLoaded === assetsToLoad.length) {
+            // Start the game when all assets are preloaded
+            startGame();
         }
     });
 
@@ -87,11 +74,6 @@ document.addEventListener('DOMContentLoaded', function () {
         // Check if the loaded asset is a video and it's not yet in the preloadedVideos array
         if (event.item.src.endsWith('.mp4') && !preloadedVideos.some(video => video.src === event.result.src)) {
             preloadedVideos.push(event.result);
-        }
-
-        // Trigger the start of the game when at least one video is preloaded
-        if (preloadedVideos.length >= 1) {
-            startGame();
         }
     });
 
@@ -115,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (!audioPlaying) {
                 createjs.Sound.registerSound({ src: 'wwwroot/assets/Song.m4a', id: 'backgroundAudio' });
-                                const backgroundAudio = createjs.Sound.play('backgroundAudio', { loop: -1 });
+                const backgroundAudio = createjs.Sound.play('backgroundAudio', { loop: -1 });
                 audioPlaying = true;
             }
         });

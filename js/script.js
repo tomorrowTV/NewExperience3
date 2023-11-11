@@ -60,9 +60,23 @@ document.addEventListener('DOMContentLoaded', function () {
     preload.on('progress', function (event) {
         loadingBar.style.width = (event.progress * 100) + '%';
 
-        if (preloadedVideos.some(video => !!video)) {
-            // Hide loading screen when at least one video is preloaded
-            loadingScreen.style.display = 'none';
+        // Check if at least one video is preloaded
+        if (preloadedVideos.length === 0) {
+            const videos = assetsToLoad.filter(asset => asset.endsWith('.mp4'));
+            videos.forEach((video, index) => {
+                if (!preloadedVideos[index] && preload.getResult(video)) {
+                    const videoElement = document.createElement('video');
+                    videoElement.src = video;
+                    videoElement.preload = 'auto';
+                    videoElement.setAttribute('playsinline', '');
+                    preloadedVideos[index] = videoElement;
+                }
+            });
+
+            if (preloadedVideos.some(video => !!video)) { // Check if at least one video is preloaded
+                // Start the game when at least one video is preloaded
+                startGame();
+            }
         }
     });
 
@@ -84,6 +98,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Add an event listener for when all assets are loaded
     preload.on('complete', function () {
+        loadingScreen.style.display = 'none'; // Hide loading screen
         console.log('All assets loaded');
         if (preloadedVideos.length === 0) {
             console.warn('No videos preloaded');
@@ -91,22 +106,22 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     function startGame() {
-    // Add a click event listener to switch to the next video on user interaction
-    document.addEventListener('click', function () {
-        // Set the audio start time to match the current time in the current video
-        audioStartTime = preloadedVideos[currentVideoIndex].currentTime;
+        // Add a click event listener to switch to the next video on user interaction
+        document.addEventListener('click', function () {
+            // Set the audio start time to match the current time in the current video
+            audioStartTime = preloadedVideos[currentVideoIndex].currentTime;
 
-        currentVideoIndex = (currentVideoIndex + 1) % preloadedVideos.length;
-        playVideoByIndex(currentVideoIndex);
+            currentVideoIndex = (currentVideoIndex + 1) % preloadedVideos.length;
+            playVideoByIndex(currentVideoIndex);
 
-        if (!audioPlaying) {
-            createjs.Sound.registerSound({ src: 'wwwroot/assets/Song.m4a', id: 'backgroundAudio' });
-            const backgroundAudio = createjs.Sound.play('backgroundAudio', { loop: -1 });
-            audioPlaying = true;
-        }
-    });
+            if (!audioPlaying) {
+                createjs.Sound.registerSound({ src: 'wwwroot/assets/Song.m4a', id: 'backgroundAudio' });
+                const backgroundAudio = createjs.Sound.play('backgroundAudio', { loop: -1 });
+                audioPlaying = true;
+            }
+        });
 
-    // Start with the first video in the array
-    playVideoByIndex(0);
-}
+        // Start with the first video in the array
+        playVideoByIndex(0);
+    }
 });

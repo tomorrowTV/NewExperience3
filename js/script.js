@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Add an event listener for progress updates during loading
     preload.on('progress', function (event) {
-        loadingBar.style.width = (event.progress * 25) + '%';
+        loadingBar.style.width = (event.progress * 45) + '%';
     });
 
     // Add an event listener for when each asset is loaded
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
             preloadedVideos.push(videoElement);
         }
 
-        if (preloadedVideos.length === assetsToLoad.length - 1) {
+        if (preloadedVideos.length === assetsToLoad.length - 2) {
             // All videos are preloaded, hide loading bar and start the game
             loadingBar.style.display = 'none';
             startGame();

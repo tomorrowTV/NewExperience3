@@ -44,11 +44,11 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         } else {
             // If not fully loaded, wait for the 'canplay' event to play the video
-            newVideo.addEventListener('canplay', function onCanPlay() {
-                newVideo.removeEventListener('canplay', onCanPlay);
-                newVideo.currentTime = audioStartTime; // Set the current time in the video to match the audio start time
-                newVideo.play().catch(error => {
-                    console.error('Video playback error:', error.message);
+            newVideo.addEventListener('loadedmetadata', function onLoadedMetadata() {
+    newVideo.removeEventListener('loadedmetadata', onLoadedMetadata);
+    newVideo.currentTime = audioStartTime;
+    newVideo.play().catch(error => {
+        console.error('Video playback error:', error.message);
                 });
             });
         }

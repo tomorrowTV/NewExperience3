@@ -123,5 +123,4 @@ document.addEventListener('DOMContentLoaded', function () {
         // Start with the first video in the array
         playVideoByIndex(0);
     }
-
 });

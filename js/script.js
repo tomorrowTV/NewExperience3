@@ -74,6 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Add an event listener for when all assets are loaded
     preload.on('complete', function () {
+        loadingScreen.style.display = 'none';
         console.log('All assets loaded');
         if (preloadedVideos.length === 0) {
             console.warn('No videos preloaded');

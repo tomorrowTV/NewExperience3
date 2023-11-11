@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', function () {
     let audioPlaying = false;
     let audioStartTime = 0;
     const preloadedVideos = [];
-    const videoArray = []; // Array to store preloaded videos
     let assetsLoaded = 0;
 
     // Define assets to preload
@@ -28,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Function to play video by index
     function playVideoByIndex(index) {
-        const newVideo = videoArray[index];
+        const newVideo = preloadedVideos[index];
         videoPlayerContainer.innerHTML = ''; // Clear container
 
         // Add the 'playsinline' attribute for mobile devices
@@ -38,20 +37,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Check if the video is fully loaded before attempting to play
         if (newVideo.readyState >= 3) {
-            newVideo.currentTime = audioStartTime; // Set the current time in the video to match the audio start time
-            newVideo.play().catch(error => {
-                console.error('Video playback error:', error.message);
-            });
+            playVideo(newVideo);
         } else {
             // If not fully loaded, wait for the 'canplay' event to play the video
-            newVideo.addEventListener('loadedmetadata', function onLoadedMetadata() {
-    newVideo.removeEventListener('loadedmetadata', onLoadedMetadata);
-    newVideo.currentTime = audioStartTime;
-    newVideo.play().catch(error => {
-        console.error('Video playback error:', error.message);
-                });
+            newVideo.addEventListener('canplay', function onCanPlay() {
+                newVideo.removeEventListener('canplay', onCanPlay);
+                playVideo(newVideo);
             });
         }
+    }
+
+    // Function to play the video
+    function playVideo(video) {
+        // Set the current time in the video to match the audio start time
+        video.currentTime = audioStartTime;
+
+        // Play the video
+        video.play().catch(error => {
+            console.error('Video playback error:', error.message);
+        });
     }
 
     // Preload assets with progress tracking
@@ -62,19 +66,19 @@ document.addEventListener('DOMContentLoaded', function () {
         loadingBar.style.width = (event.progress * 100) + '%';
 
         // Check if at least one video is preloaded
-        if (videoArray.length === 0) {
+        if (preloadedVideos.length === 0) {
             const videos = assetsToLoad.filter(asset => asset.endsWith('.mp4'));
             videos.forEach((video, index) => {
-                if (!videoArray[index] && preload.getResult(video)) {
+                if (!preloadedVideos[index] && preload.getResult(video)) {
                     const videoElement = document.createElement('video');
                     videoElement.src = video;
                     videoElement.preload = 'auto';
                     videoElement.setAttribute('playsinline', '');
-                    videoArray[index] = videoElement;
+                    preloadedVideos[index] = videoElement;
                 }
             });
 
-            if (videoArray.length > 0) {
+            if (preloadedVideos.some(video => !!video)) { // Check if at least one video is preloaded
                 // Start the game when at least one video is preloaded
                 startGame();
             }
@@ -86,13 +90,13 @@ document.addEventListener('DOMContentLoaded', function () {
         assetsLoaded++;
         console.log('Assets loaded:', assetsLoaded);
 
-        // Check if the loaded asset is a video and it's not yet in the videoArray
-        if (event.item.src.endsWith('.mp4') && !videoArray.some(video => video.src === event.result.src)) {
-            videoArray.push(event.result);
+        // Check if the loaded asset is a video and it's not yet in the preloadedVideos array
+        if (event.item.src.endsWith('.mp4') && !preloadedVideos.some(video => video.src === event.result.src)) {
+            preloadedVideos.push(event.result);
         }
 
         // Trigger the start of the game when at least one video is preloaded
-        if (videoArray.length >= 1) {
+        if (preloadedVideos.length >= 1) {
             startGame();
         }
     });
@@ -101,21 +105,18 @@ document.addEventListener('DOMContentLoaded', function () {
     preload.on('complete', function () {
         loadingScreen.style.display = 'none'; // Hide loading screen
         console.log('All assets loaded');
-        if (videoArray.length === 0) {
+        if (preloadedVideos.length === 0) {
             console.warn('No videos preloaded');
         }
     });
 
     function startGame() {
-        // Hide the loading screen
-        loadingScreen.style.display = 'none';
-
         // Add a click event listener to switch to the next video on user interaction
         document.addEventListener('click', function () {
             // Set the audio start time to match the current time in the current video
-            audioStartTime = videoArray[currentVideoIndex].currentTime;
+            audioStartTime = preloadedVideos[currentVideoIndex].currentTime;
 
-            currentVideoIndex = (currentVideoIndex + 1) % videoArray.length;
+            currentVideoIndex = (currentVideoIndex + 1) % preloadedVideos.length;
             playVideoByIndex(currentVideoIndex);
 
             if (!audioPlaying) {

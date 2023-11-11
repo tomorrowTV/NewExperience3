@@ -115,4 +115,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (!audioPlaying) {
                 createjs.Sound.registerSound({ src: 'wwwroot/assets/Song.m4a', id: 'backgroundAudio' });
-                const backgroundAudio = createjs.Sound.play('backgroundAudio
+                                const backgroundAudio = createjs.Sound.play('backgroundAudio', { loop: -1 });
+                audioPlaying = true;
+            }
+        });
+
+        // Start with the first video in the array
+        playVideoByIndex(0);
+    }
+

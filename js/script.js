@@ -91,22 +91,22 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     function startGame() {
-        // Add a click event listener to switch to the next video on user interaction
-        document.addEventListener('click', function () {
-            // Set the audio start time to match the current time in the current video
-            audioStartTime = preloadedVideos[currentVideoIndex].currentTime;
+    // Add a click event listener to switch to the next video on user interaction
+    document.addEventListener('click', function () {
+        // Set the audio start time to match the current time in the current video
+        audioStartTime = preloadedVideos[currentVideoIndex].currentTime;
 
-            currentVideoIndex = (currentVideoIndex + 1) % preloadedVideos.length;
-            playVideoByIndex(currentVideoIndex);
+        currentVideoIndex = (currentVideoIndex + 1) % preloadedVideos.length;
+        playVideoByIndex(currentVideoIndex);
 
-            if (!audioPlaying) {
-                createjs.Sound.registerSound({ src: 'wwwroot/assets/Song.m4a', id: 'backgroundAudio' });
-                const backgroundAudio = createjs.Sound.play('backgroundAudio', { loop: -1 });
-                audioPlaying = true;
-            }
-        });
+        if (!audioPlaying) {
+            createjs.Sound.registerSound({ src: 'wwwroot/assets/Song.m4a', id: 'backgroundAudio' });
+            const backgroundAudio = createjs.Sound.play('backgroundAudio', { loop: -1 });
+            audioPlaying = true;
+        }
+    });
 
-        // Start with the first video in the array
-        playVideoByIndex(0);
-    }
+    // Start with the first video in the array
+    playVideoByIndex(0);
+}
 });

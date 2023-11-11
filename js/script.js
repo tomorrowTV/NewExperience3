@@ -30,13 +30,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Add an event listener for progress updates during loading
     preload.on('progress', function (event) {
         loadingBar.style.width = (event.progress * 100) + '%';
-
-        // Check if at least 50% of videos are preloaded
-        if (event.progress >= 0.5 && preloadedVideos.length >= assetsToLoad.length / 2) {
-            // Hide loading bar and start the game
-            loadingBar.style.display = 'none';
-            startGame();
-        }
     });
 
     // Add an event listener for when each asset is loaded
@@ -48,13 +41,13 @@ document.addEventListener('DOMContentLoaded', function () {
             videoElement.src = asset;
             videoElement.preload = 'auto';
             videoElement.setAttribute('playsinline', '');
-
-            // Play the video as soon as it's added to preloadedVideos
-            videoElement.play().catch(error => {
-                console.error('Video playback error:', error.message);
-            });
-
             preloadedVideos.push(videoElement);
+        }
+
+        if (preloadedVideos.length === assetsToLoad.length - 1) {
+            // All videos are preloaded, hide loading bar and start the game
+            loadingBar.style.display = 'none';
+            startGame();
         }
     });
 
@@ -90,6 +83,9 @@ document.addEventListener('DOMContentLoaded', function () {
             createjs.Sound.registerSound({ src: 'wwwroot/assets/Song.m4a', id: 'backgroundAudio' });
             const backgroundAudio = createjs.Sound.play('backgroundAudio', { loop: -1 });
             audioPlaying = true;
+
+            // Hide the loading screen when audio starts playing
+            loadingScreen.style.display = 'none';
         }
     });
 

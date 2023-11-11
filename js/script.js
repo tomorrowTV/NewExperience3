@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
     ];
 
     const preload = new createjs.LoadQueue();
-    preload.setMaxConnections(6);
+    preload.setMaxConnections(7);
 
     // Preload assets with progress tracking
     preload.loadManifest(assetsToLoad);

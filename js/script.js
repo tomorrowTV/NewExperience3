@@ -22,14 +22,14 @@ document.addEventListener('DOMContentLoaded', function () {
     ];
 
     const preload = new createjs.LoadQueue();
-    preload.setMaxConnections(5);
+    preload.setMaxConnections(2);
 
     // Preload assets with progress tracking
     preload.loadManifest(assetsToLoad);
 
     // Add an event listener for progress updates during loading
     preload.on('progress', function (event) {
-        loadingBar.style.width = (event.progress * 45) + '%';
+        loadingBar.style.width = (event.progress * 80) + '%';
     });
 
     // Add an event listener for when each asset is loaded
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
             preloadedVideos.push(videoElement);
         }
 
-        if (preloadedVideos.length === assetsToLoad.length - 2) {
+        if (preloadedVideos.length === assetsToLoad.length - 1) {
             // All videos are preloaded, hide loading bar and start the game
             loadingBar.style.display = 'none';
             startGame();

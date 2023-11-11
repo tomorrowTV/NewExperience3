@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Add an event listener for progress updates during loading
     preload.on('progress', function (event) {
-        loadingBar.style.width = (event.progress * 100) + '%';
+        loadingBar.style.width = (event.progress * 25) + '%';
     });
 
     // Add an event listener for when each asset is loaded

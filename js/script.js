@@ -1,93 +1,83 @@
 document.addEventListener('DOMContentLoaded', function () {
     const videoPlayerContainer = document.getElementById('videoPlayerContainer');
-    let currentVideoIndex = 0;
-    let audioPlaying = false;
-    let audioStartTime = 0;
-    const preloadedVideos = [];
-    let assetsLoaded = 0;
+    let currentVideo; // Declare currentVideo variable
+    let currentVideoIndex = 0; // Keep track of the current video index
+    let audioPlaying = false; // Flag to track audio playback
 
-    const assetsToLoad = [
-        'wwwroot/assets/CowboyHead.gif',
-        'wwwroot/assets/Song.m4a',
+    // Create an array to store preloaded video elements
+    const preloadedVideos = [];
+
+    // Define the videoArray with the video paths
+    const videoArray = [
         'wwwroot/videos/SW1.mp4',
         'wwwroot/videos/SW2.mp4',
         'wwwroot/videos/SW3.mp4',
         'wwwroot/videos/SW4.mp4',
         'wwwroot/videos/SW5.mp4',
         'wwwroot/videos/SW6.mp4',
-        // Add more assets as needed
+        // Add more video filenames as needed
     ];
 
+    // Initialize CreateJS PreloadJS
     const preload = new createjs.LoadQueue();
-    preload.setMaxConnections(5);
+    preload.setMaxConnections(5); // Adjust the number of concurrent downloads
 
-    const loadingScreen = document.getElementById('loadingBarContainer');
+    // Reference to the loading bar element
+    const loadingBar = document.getElementById('loadingBar');
 
     // Function to play video by index
     function playVideoByIndex(index) {
+        if (currentVideo) {
+            currentVideo.pause();
+            videoPlayerContainer.removeChild(currentVideo);
+        }
+
         const newVideo = preloadedVideos[index];
-        videoPlayerContainer.innerHTML = ''; // Clear container
-
-        // Add the 'playsinline' attribute for mobile devices
-        newVideo.setAttribute('playsinline', '');
-
         videoPlayerContainer.appendChild(newVideo);
 
-        // Set the current time in the video to match the audio start time
-        newVideo.currentTime = audioStartTime;
+        newVideo.currentTime = currentVideo ? currentVideo.currentTime : 0; // Sync video time
 
-        newVideo.play().catch(error => {
+        currentVideo = newVideo;
+        currentVideo.play().catch(error => {
             console.error('Video playback error:', error.message);
         });
+
+        currentVideoIndex = index;
     }
 
-    // Preload assets with progress tracking
-    preload.loadManifest(assetsToLoad);
+    // Preload all videos with progress tracking
+    preload.loadManifest(videoArray.map(videoPath => ({ src: videoPath })));
 
     // Add an event listener for progress updates during loading
     preload.on('progress', function (event) {
-        // Check if at least three videos are preloaded
-        if (assetsLoaded >= 3 && !audioPlaying) {
-            loadingScreen.style.display = 'none';
-            startGame();
+        // Update the width of the loading bar based on progress
+        loadingBar.style.width = (event.progress * 100) + '%';
+
+        // Check if the loading progress has reached a certain threshold (e.g., 50%)
+        if (event.progress >= 0.5) {
+            // Hide or remove the loading bar element
+            loadingBar.style.display = 'none';
+
+            // Proceed with the video player logic
+
+            // Add a click event listener to switch to the next video on user interaction
+            document.addEventListener('click', () => {
+                // Calculate the next index, wrapping around to the beginning if needed
+                currentVideoIndex = (currentVideoIndex + 1) % videoArray.length;
+
+                // Play the next video
+                playVideoByIndex(currentVideoIndex);
+
+                // Play the background audio using SoundJS only once
+                if (!audioPlaying) {
+                    createjs.Sound.registerSound({ src: 'wwwroot/assets/Song.m4a', id: 'backgroundAudio' });
+                    const backgroundAudio = createjs.Sound.play('backgroundAudio', { loop: -1 });
+                    audioPlaying = true;
+                }
+            });
+
+            // Start with the first video in the array
+            playVideoByIndex(0);
         }
     });
-
-    // Add an event listener for when each asset is loaded
-    preload.on('fileload', function (event) {
-        assetsLoaded++;
-
-        // Check if the loaded asset is a video and it's not yet in the preloadedVideos array
-        if (event.item.src.endsWith('.mp4') && !preloadedVideos.some(video => video.src === event.result.src)) {
-            preloadedVideos.push(event.result);
-        }
-    });
-
-    // Add an event listener for when all assets are loaded
-    preload.on('complete', function () {
-        console.log('All assets loaded');
-        if (preloadedVideos.length === 0) {
-            console.warn('No videos preloaded');
-        }
-    });
-
-    function startGame() {
-        // Add a click event listener to switch to the next video on user interaction
-        document.addEventListener('click', function () {
-            // Set the audio start time to match the current time in the current video
-            audioStartTime = preloadedVideos[currentVideoIndex].currentTime;
-
-            currentVideoIndex = (currentVideoIndex + 1) % preloadedVideos.length;
-            playVideoByIndex(currentVideoIndex);
-
-            if (!audioPlaying) {
-                createjs.Sound.registerSound({ src: 'wwwroot/assets/Song.m4a', id: 'backgroundAudio' });
-                const backgroundAudio = createjs.Sound.play('backgroundAudio', { loop: -1 });
-                audioPlaying = true;
-            }
-        });
-
-        // Start with the first video in the array
-        playVideoByIndex(0);
-    }
 });

@@ -49,10 +49,12 @@ html {
 
 #loadingBar {
     /* Add your styles for the loading bar here */
+    z-index: 1; /* Set a lower z-index value than the loading text */
 }
 
 #loadingText {
     font-family: 'Acre', sans-serif; /* Replace 'Your Font Name' with the desired font */
+    font-weight: bold; /* Set font weight to bold */
     color: #ffffff; /* Set the text color (hex, rgb, or color name) */
     font-size: 60px; /* Set the font size */
     position: absolute; /* Set the position to absolute */

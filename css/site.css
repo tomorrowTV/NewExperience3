@@ -47,14 +47,6 @@ html {
     min-height: 100%;
 }
 
-#loadingBarContainer {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1; /* Ensure the loading bar container appears behind the text container */
-}
-
 #loadingBar {
     /* Add your styles for the loading bar here */
 }
@@ -62,22 +54,22 @@ html {
 #loadingTextContainer {
     position: absolute;
     top: 50%;
-    left: 80%; /* Adjust the left property to move the entire text container more to the right */
-    transform: translate(-50%, -50%);
-    z-index: 3; /* Ensure the text container appears above the loading bar */
+    left: 50%;
+    transform: translate(-50%, -50%) translateY(-50%); /* Adjust the translation to center vertically based on the loading graphic's height */
+    z-index: 2; /* Ensure the text appears above the loading graphic */
 }
 
 /* Loading text styles */
+/* Loading text styles */
 #loadingText {
-    font-family: 'Futura', sans-serif; /* Replace 'Your Font Name' with the desired font */
-    font-weight: 600;
+    font-family: 'Acre', sans-serif; /* Replace 'Your Font Name' with the desired font */
     color: #ffffff; /* Set the text color (hex, rgb, or color name) */
-    font-size: 60px; /* Set the font size */
+    font-size: 40px; /* Set the font size */
     position: absolute; /* Set the position to absolute */
     top: 50%; /* Center vertically */
-    left: 50%; /* Center horizontally */
+    left: 80%; /* Center horizontally */
     transform: translate(-50%, -50%); /* Center the text */
-    animation: fade 5s infinite; /* Use the fade animation with a duration of 2 seconds */
+    animation: fade 2s infinite; /* Use the fade animation with a duration of 2 seconds */
     z-index: 3; /* Ensure the text appears above the loading graphic */
 }
 
@@ -86,7 +78,6 @@ html {
         opacity: 0; /* Start and end with transparency */
     }
     50% {
-        opacity: 1; /* Fully opaque in the middle of the animation */
+        opacity: 5; /* Fully opaque in the middle of the animation */
     }
 }
-

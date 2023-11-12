@@ -63,10 +63,10 @@ html {
 /* Loading text styles */
 /* Loading text styles */
 #loadingText {
-    font-family: 'futura', sans-serif; /* Replace 'Your Font Name' with the desired font */
+    font-family: 'bodoni', sans-serif; /* Replace 'Your Font Name' with the desired font */
     font-weight: bold;
-    color: orange; /* Set the text color (hex, rgb, or color name) */
-    font-size: 45px; /* Set the font size */
+    color: peach; /* Set the text color (hex, rgb, or color name) */
+    font-size: 60px; /* Set the font size */
     position: absolute; /* Set the position to absolute */
     top: 55%; /* Center vertically */
     left: 55%; /* Center horizontally */
@@ -81,5 +81,15 @@ html {
     }
     50% {
         opacity: 5; /* Fully opaque in the middle of the animation */
+    }
+}
+
+/* Slide upward animation */
+@keyframes slideUp {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-100%);
     }
 }

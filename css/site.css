@@ -63,7 +63,7 @@ html {
 
 /* Loading text styles */
 #loadingText {
-    font-family: 'bodoni', serif; /* Replace 'Your Font Name' with the desired font */
+    font-family: 'futura', sans-serif; /* Replace 'Your Font Name' with the desired font */
     font-weight: 600;
     font-style: ;
     color: #C8958A; /* Set the text color (hex, rgb, or color name) */

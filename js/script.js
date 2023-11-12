@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const videoPlayerContainer = document.getElementById('videoPlayerContainer');
     const loadingBar = document.getElementById('loadingBar');
     const loadingScreen = document.getElementById('loadingBarContainer');
+    const loadingText = document.getElementById('loadingText'); // Add this line to get the loading text element
 
     let currentVideoIndex = 0;
     let audioPlaying = false;
@@ -93,5 +94,8 @@ document.addEventListener('DOMContentLoaded', function () {
     function startGame() {
         // Start with the first video in the array
         playVideoByIndex(0);
+
+        // Change loading text to "Click" when the game starts
+        loadingText.textContent = 'Click';
     }
 });

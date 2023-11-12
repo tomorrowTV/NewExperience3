@@ -47,27 +47,42 @@ html {
     min-height: 100%;
 }
 
-#loadingBar {
-    /* Add your styles for the loading bar here */
-    z-index: 1; /* Set a lower z-index value than the loading text */
-}
-
-#loadingText {
-    font-family: 'Acre', sans-serif;
-    font-weight: 400;
-    color: #ffffff;
-    font-size: 60px;
+#loadingContainer {
     position: absolute;
     top: 50%;
-    left: 80%; /* Adjust this value to move the text horizontally */
-    transform: translateY(-50%);
-    z-index: 3; /* Ensure the text appears above the loading graphic */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2; /* Ensure the loading container appears above other elements */
+}
+
+#loadingBarContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1; /* Ensure the loading bar container appears behind the text container */
+}
+
+#loadingBar {
+    /* Add your styles for the loading bar here */
 }
 
 #loadingTextContainer {
     position: absolute;
     top: 50%;
-    left: 70%;
+    left: 70%; /* Adjust the left property to move the entire text container more to the right */
     transform: translate(-50%, -50%);
-    z-index: 2; /* Ensure the text appears above the loading graphic */
+    z-index: 3; /* Ensure the text container appears above the loading bar */
+}
+
+#loadingText {
+    font-family: 'Acre', sans-serif;
+    font-weight: bold;
+    color: #ffffff;
+    font-size: 60px;
+    position: absolute;
+    top: 50%;
+    left: 50%; /* Center horizontally within the text container */
+    transform: translateX(-50%) translateY(-50%);
+    z-index: 3; /* Ensure the text appears above the loading bar */
 }

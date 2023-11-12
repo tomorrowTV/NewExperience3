@@ -67,14 +67,26 @@ html {
     z-index: 3; /* Ensure the text container appears above the loading bar */
 }
 
+/* Loading text styles */
 #loadingText {
-    font-family: 'futura', sans-serif;
-    font-weight: demi-bold;
-    color: #ffffff;
-    font-size: 60px;
-    position: absolute;
-    top: 50%;
-    left: 70%; /* Center horizontally within the text container */
-    transform: translateX(-50%) translateY(-50%);
-    z-index: 3; /* Ensure the text appears above the loading bar */
+    font-family: 'Futura', sans-serif; /* Replace 'Your Font Name' with the desired font */
+    font-weight: 600;
+    color: #ffffff; /* Set the text color (hex, rgb, or color name) */
+    font-size: 60px; /* Set the font size */
+    position: absolute; /* Set the position to absolute */
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Center the text */
+    animation: fade 2s infinite; /* Use the fade animation with a duration of 2 seconds */
+    z-index: 3; /* Ensure the text appears above the loading graphic */
 }
+
+@keyframes fade {
+    0%, 100% {
+        opacity: 0; /* Start and end with transparency */
+    }
+    50% {
+        opacity: 1; /* Fully opaque in the middle of the animation */
+    }
+}
+

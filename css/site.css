@@ -47,6 +47,10 @@ html {
     min-height: 100%;
 }
 
+#loadingBar {
+    /* Add your styles for the loading bar here */
+}
+
 #loadingTextContainer {
     position: absolute;
     top: 50%;

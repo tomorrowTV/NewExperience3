@@ -49,7 +49,7 @@ html {
 
 #loadingBar {
     position: absolute;
-    top: 10%;
+    top: 9%;
     left: 10%;/* Add your styles for the loading bar here */
 }
 
@@ -72,7 +72,7 @@ html {
     top: 55%; /* Center vertically */
     left: 58%; /* Center horizontally */
     transform: translate(-50%, -50%); /* Center the text */
-    animation: fade 4s infinite; /* Use the fade animation with a duration of 5 seconds */
+    animation: fade 5s infinite; /* Use the fade animation with a duration of 5 seconds */
     z-index: 3; /* Ensure the text appears above the loading graphic */
 }
 

@@ -48,7 +48,8 @@ html {
 }
 
 #loadingBar {
-    /* Add your styles for the loading bar here */
+    top: 50%;
+    left: 40%;/* Add your styles for the loading bar here */
 }
 
 #loadingTextContainer {
@@ -67,8 +68,8 @@ html {
     color: orange; /* Set the text color (hex, rgb, or color name) */
     font-size: 40px; /* Set the font size */
     position: absolute; /* Set the position to absolute */
-    top: 70%; /* Center vertically */
-    left: 70%; /* Center horizontally */
+    top: 60%; /* Center vertically */
+    left: 60%; /* Center horizontally */
     transform: translate(-50%, -50%); /* Center the text */
     animation: fade 5s infinite; /* Use the fade animation with a duration of 2 seconds */
     z-index: 3; /* Ensure the text appears above the loading graphic */

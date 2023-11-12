@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Add an event listener for progress updates during loading
     preload.on('progress', function (event) {
-        loadingBar.style.width = (event.progress * 80) + '%';
+        loadingBar.style.width = (event.progress * 20) + '%';
     });
 
     // Add an event listener for when each asset is loaded

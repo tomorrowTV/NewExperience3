@@ -53,14 +53,14 @@ html {
 }
 
 #loadingText {
-    font-family: 'Acre', sans-serif; /* Replace 'Your Font Name' with the desired font */
-    font-weight: bold; /* Set font weight to bold */
-    color: #ffffff; /* Set the text color (hex, rgb, or color name) */
-    font-size: 60px; /* Set the font size */
-    position: absolute; /* Set the position to absolute */
-    top: 50%; /* Center vertically */
-    left: 80%; /* Center horizontally */
-    transform: translateX(-50%) translateY(-50%);
+    font-family: 'Lombok', sans-serif;
+    font-weight: 600;
+    color: #ffffff;
+    font-size: 60px;
+    position: absolute;
+    top: 50%;
+    left: 80%; /* Adjust this value to move the text horizontally */
+    transform: translateY(-50%);
     z-index: 3; /* Ensure the text appears above the loading graphic */
 }
 

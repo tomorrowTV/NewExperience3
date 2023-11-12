@@ -64,4 +64,5 @@ html {
     top: 50%; /* Center vertically */
     left: 50%; /* Center horizontally */
     transform: translate(-50%, -50%) translateY(-50%); /* Center the text */
+    z-index: 3; /* Ensure the text appears above the loading graphic */
 }

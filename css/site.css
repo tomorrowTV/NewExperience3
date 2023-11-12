@@ -76,13 +76,13 @@ html {
 }
 
 #loadingText {
-    font-family: 'sauvage', sans-serif;
+    font-family: 'futura', sans-serif;
     font-weight: demi-bold;
     color: #ffffff;
     font-size: 60px;
     position: absolute;
     top: 50%;
-    left: 50%; /* Center horizontally within the text container */
+    left: 70%; /* Center horizontally within the text container */
     transform: translateX(-50%) translateY(-50%);
     z-index: 3; /* Ensure the text appears above the loading bar */
 }

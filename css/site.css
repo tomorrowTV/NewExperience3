@@ -50,7 +50,7 @@ html {
 #loadingBarContainer {
     position: absolute;
     top: 50%;
-    left: 20%;
+    left: 50%;
     transform: translate(-50%, -50%);
     z-index: 1; /* Ensure the loading bar container appears behind the text container */
 }
@@ -62,7 +62,7 @@ html {
 #loadingTextContainer {
     position: absolute;
     top: 50%;
-    left: 70%; /* Adjust the left property to move the entire text container more to the right */
+    left: 80%; /* Adjust the left property to move the entire text container more to the right */
     transform: translate(-50%, -50%);
     z-index: 3; /* Ensure the text container appears above the loading bar */
 }
@@ -77,7 +77,7 @@ html {
     top: 50%; /* Center vertically */
     left: 50%; /* Center horizontally */
     transform: translate(-50%, -50%); /* Center the text */
-    animation: fade 2s infinite; /* Use the fade animation with a duration of 2 seconds */
+    animation: fade 5s infinite; /* Use the fade animation with a duration of 2 seconds */
     z-index: 3; /* Ensure the text appears above the loading graphic */
 }
 

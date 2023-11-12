@@ -63,8 +63,8 @@ html {
 
 /* Loading text styles */
 #loadingText {
-    font-family: 'nexa', sans-serif; /* Replace 'Your Font Name' with the desired font */
-    font-weight: 450;
+    font-family: 'future', sans-serif; /* Replace 'Your Font Name' with the desired font */
+    font-weight: 600;
     font-style: ;
     color: #C8958A; /* Set the text color (hex, rgb, or color name) */
     font-size: 60px; /* Set the font size */

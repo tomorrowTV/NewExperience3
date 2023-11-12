@@ -53,7 +53,7 @@ html {
 }
 
 #loadingText {
-    font-family: 'cinzel', sans-serif;
+    font-family: 'Acre', sans-serif;
     font-weight: 400;
     color: #ffffff;
     font-size: 60px;
@@ -67,7 +67,7 @@ html {
 #loadingTextContainer {
     position: absolute;
     top: 50%;
-    left: 80%;
+    left: 70%;
     transform: translate(-50%, -50%);
     z-index: 2; /* Ensure the text appears above the loading graphic */
 }

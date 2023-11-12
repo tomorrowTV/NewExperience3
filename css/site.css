@@ -63,9 +63,9 @@ html {
 
 /* Loading text styles */
 #loadingText {
-    font-family: 'Laro soft', sans-serif; /* Replace 'Your Font Name' with the desired font */
+    font-family: 'nexa', sans-serif; /* Replace 'Your Font Name' with the desired font */
     font-weight: 450;
-    font-style: italic;
+    font-style: ;
     color: #C8958A; /* Set the text color (hex, rgb, or color name) */
     font-size: 60px; /* Set the font size */
     position: absolute; /* Set the position to absolute */

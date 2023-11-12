@@ -46,3 +46,14 @@ html {
     position: relative;
     min-height: 100%;
 }
+
+/* Loading text styles */
+#loadingText {
+    font-family: 'Baskerville', sans-serif; /* Replace 'Your Font Name' with the desired font */
+    color: #ffffff; /* Set the text color (hex, rgb, or color name) */
+    font-size: 20px; /* Set the font size */
+    position: absolute; /* Set the position to absolute */
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Center the text */
+}

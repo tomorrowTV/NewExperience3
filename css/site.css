@@ -65,7 +65,8 @@ html {
 #loadingText {
     font-family: 'Futura', sans-serif; /* Replace 'Your Font Name' with the desired font */
     font-weight: 500;
-    color: #FFDAB9; /* Set the text color (hex, rgb, or color name) */
+    font-style: italic;
+    color: #C8958A; /* Set the text color (hex, rgb, or color name) */
     font-size: 60px; /* Set the font size */
     position: absolute; /* Set the position to absolute */
     top: 55%; /* Center vertically */

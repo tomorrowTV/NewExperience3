@@ -62,8 +62,9 @@ html {
 /* Loading text styles */
 /* Loading text styles */
 #loadingText {
-    font-family: 'Acre', sans-serif; /* Replace 'Your Font Name' with the desired font */
-    color: blood orange; /* Set the text color (hex, rgb, or color name) */
+    font-family: 'futura', sans-serif; /* Replace 'Your Font Name' with the desired font */
+    font-weight: bold;
+    color: orange; /* Set the text color (hex, rgb, or color name) */
     font-size: 40px; /* Set the font size */
     position: absolute; /* Set the position to absolute */
     top: 70%; /* Center vertically */

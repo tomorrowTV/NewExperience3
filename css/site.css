@@ -49,8 +49,8 @@ html {
 
 #loadingBar {
     position: absolute;
-    top: 55%;
-    left: 30%;/* Add your styles for the loading bar here */
+    top: 38%;
+    left: 25%;/* Add your styles for the loading bar here */
 }
 
 #loadingTextContainer {

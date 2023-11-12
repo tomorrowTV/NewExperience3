@@ -50,7 +50,7 @@ html {
 #loadingBar {
     position: absolute;
     top: 55%;
-    left: 50%;/* Add your styles for the loading bar here */
+    left: 30%;/* Add your styles for the loading bar here */
 }
 
 #loadingTextContainer {
@@ -63,15 +63,15 @@ html {
 
 /* Loading text styles */
 #loadingText {
-    font-family: 'bodoni', sans-serif; /* Replace 'Your Font Name' with the desired font */
-    font-weight: bold;
+    font-family: 'Futura', sans-serif; /* Replace 'Your Font Name' with the desired font */
+    font-weight: 500;
     color: #FFDAB9; /* Set the text color (hex, rgb, or color name) */
     font-size: 60px; /* Set the font size */
     position: absolute; /* Set the position to absolute */
     top: 55%; /* Center vertically */
     left: 55%; /* Center horizontally */
     transform: translate(-50%, -50%); /* Center the text */
-    animation: fade 5s infinite; /* Use the fade animation with a duration of 5 seconds */
+    animation: fade 4s infinite; /* Use the fade animation with a duration of 5 seconds */
     z-index: 3; /* Ensure the text appears above the loading graphic */
 }
 

@@ -83,13 +83,3 @@ html {
         opacity: 1; /* Fully opaque in the middle of the animation */
     }
 }
-
-/* Slide upward animation */
-@keyframes slideUp {
-    0% {
-        transform: translateY(0);
-    }
-    100% {
-        transform: translateY(-20%);
-    }
-}

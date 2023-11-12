@@ -59,7 +59,7 @@ html {
     font-size: 60px; /* Set the font size */
     position: absolute; /* Set the position to absolute */
     top: 50%; /* Center vertically */
-    left: 50%; /* Center horizontally */
+    left: 80%; /* Center horizontally */
     transform: translateX(-50%) translateY(-50%);
     z-index: 3; /* Ensure the text appears above the loading graphic */
 }

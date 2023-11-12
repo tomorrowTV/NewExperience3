@@ -53,13 +53,13 @@ html {
 }
 
 #loadingText {
-    font-family: 'Lombok', sans-serif;
-    font-weight: 600;
+    font-family: 'thinoo', sans-serif;
+    font-weight: 500;
     color: #ffffff;
     font-size: 60px;
     position: absolute;
     top: 50%;
-    left: 80%; /* Adjust this value to move the text horizontally */
+    left: 100%; /* Adjust this value to move the text horizontally */
     transform: translateY(-50%);
     z-index: 3; /* Ensure the text appears above the loading graphic */
 }

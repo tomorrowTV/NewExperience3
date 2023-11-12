@@ -63,5 +63,5 @@ html {
     position: absolute; /* Set the position to absolute */
     top: 50%; /* Center vertically */
     left: 50%; /* Center horizontally */
-    transform: translate(-50%, -50%)translateY(-50%); /* Center the text */
+    transform: translate(-50%, -50%) translateY(-50%); /* Center the text */
 }
